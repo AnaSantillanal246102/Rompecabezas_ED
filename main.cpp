@@ -3,58 +3,184 @@
 Marlene Itzel Muñoz - 24
 Ana Paula Santillan Nuñez - 246102
 */
+
 #include <iostream>
+#include <stdexcept>
 #include "Estado.h"
 
 using namespace std;
 
-int main(int argc, char** argv) {
-    // Crear el tablero inicial
+int main() {
+
+    /*char tableroCorrecto[9] = {
+        '1', '2', '3',
+        '4', 'X', '6',
+        '7', '5', '8'
+    };
+
+    char tableroRepetido[9] = {
+        '1', '1', '3',
+        '4', 'X', '6',
+        '7', '5', '8'
+    };
+
+    try {
+
+        Estado inicial(tableroCorrecto);
+
+        cout << "Tablero valido:" << endl;
+        inicial.imprimir();
+
+        cout << "\nProbando tablero repetido:" << endl;
+
+        Estado incorrecto(tableroRepetido);
+
+    }
+    catch (const invalid_argument& e) {
+
+        cout << e.what() << endl;
+
+    }
+    
+        char tableroInicial[9] = {
+        '1', '2', '3',
+        '4', 'X', '6',
+        '7', '5', '8'
+    };
+
+    Estado inicial(tableroInicial);
+
+    cout << "ESTADO INICIAL:" << endl;
+    inicial.imprimir();
+
+    char movimientos[] = {'U', 'D', 'L', 'R'};
+
+    for (int i = 0; i < 4; i++) {
+
+        cout << "\nMovimiento: " << movimientos[i] << endl;
+
+        Estado* hijo = inicial.mover(movimientos[i]);
+
+        if (hijo != nullptr) {
+
+            hijo->imprimir();
+
+            cout << "Movimiento registrado: "
+                 << hijo->getMovimiento() << endl;
+
+            cout << "Padre correcto: "
+                 << (hijo->getParent() == &inicial ? "Si" : "No")
+                 << endl;
+
+            delete hijo;
+        }
+        else {
+            cout << "Movimiento no valido." << endl;
+        }
+    }*/
+    
+    // ==========================================
+    // PRUEBA 1: HUECO EN EL CENTRO
+    // ==========================================
+
+    cout << "==================================" << endl;
+    cout << " PRUEBA 1: HUECO EN EL CENTRO" << endl;
+    cout << "==================================" << endl;
+
     char tableroInicial[9] = {
         '1', '2', '3',
         '4', 'X', '6',
         '7', '5', '8'
     };
 
-    // Crear el tablero objetivo
-    char tableroObjetivo[9] = {
-        '1', '2', '3',
-        '4', '5', '6',
-        '7', '8', 'X'
-    };
-
-    // Crear los estados
     Estado inicial(tableroInicial);
-    Estado objetivo(tableroObjetivo);
 
-    // Imprimir estado inicial
-    cout << "===== ESTADO INICIAL =====" << endl;
+    cout << "\nTablero original:" << endl;
     inicial.imprimir();
 
-    cout << "Posicion del hueco: "
-         << inicial.posicionHueco() << endl;
+    char movimientos[] = {'U', 'D', 'L', 'R'};
 
-    // Imprimir estado objetivo
-    cout << "\n===== ESTADO OBJETIVO =====" << endl;
-    objetivo.imprimir();
+    for (int i = 0; i < 4; i++) {
 
-    cout << "Posicion del hueco: "
-         << objetivo.posicionHueco() << endl;
+        cout << "\nMovimiento: " << movimientos[i] << endl;
 
-    // Comparar ambos estados
-    cout << "\n===== COMPARACIONES =====" << endl;
+        Estado* hijo = inicial.mover(movimientos[i]);
 
-    cout << "Inicial es igual al objetivo: "
-         << (inicial.esIgual(objetivo) ? "true" : "false")
-         << endl;
+        if (hijo != nullptr) {
 
-    cout << "Inicial es igual a si mismo: "
-         << (inicial.esIgual(inicial) ? "true" : "false")
-         << endl;
+            cout << "Movimiento valido." << endl;
 
-    cout << "Objetivo es igual a si mismo: "
-         << (objetivo.esIgual(objetivo) ? "true" : "false")
-         << endl;
+            cout << "Tablero hijo:" << endl;
+            hijo->imprimir();
 
-	return 0;
+            // Verificar que el padre sea el estado original
+            if (hijo->getParent() == &inicial) {
+                cout << "Padre correcto." << endl;
+            }
+            else {
+                cout << "Error en el padre." << endl;
+            }
+
+            // Verificar movimiento registrado
+            cout << "Movimiento registrado: "
+                 << hijo->getMovimiento() << endl;
+
+            delete hijo;
+        }
+        else {
+            cout << "Error: movimiento no valido." << endl;
+        }
+    }
+
+    // Verificar que el original no cambio
+    cout << "\nTablero original despues de generar hijos:" << endl;
+    inicial.imprimir();
+
+
+    // ==========================================
+    // PRUEBA 2: HUECO EN ESQUINA
+    // ==========================================
+
+    cout << "\n==================================" << endl;
+    cout << " PRUEBA 2: HUECO EN ESQUINA" << endl;
+    cout << "==================================" << endl;
+
+    char tableroEsquina[9] = {
+        'X', '1', '2',
+        '3', '4', '5',
+        '6', '7', '8'
+    };
+
+    Estado esquina(tableroEsquina);
+
+    cout << "\nTablero original:" << endl;
+    esquina.imprimir();
+
+    for (int i = 0; i < 4; i++) {
+
+        cout << "\nMovimiento: " << movimientos[i] << endl;
+
+        Estado* hijo = esquina.mover(movimientos[i]);
+
+        if (hijo != nullptr) {
+
+            cout << "Movimiento valido." << endl;
+            hijo->imprimir();
+
+            cout << "Padre correcto: "
+                 << (hijo->getParent() == &esquina ? "Si" : "No")
+                 << endl;
+
+            delete hijo;
+        }
+        else {
+            cout << "nullptr: movimiento no valido." << endl;
+        }
+    }
+
+    // Verificar que el tablero original sigue intacto
+    cout << "\nTablero original despues de generar hijos:" << endl;
+    esquina.imprimir();
+
+    return 0;
 }
