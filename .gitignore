@@ -1,0 +1,26 @@
+
+# Ejecutables
+*.exe
+*.out
+
+# Archivos objeto de C++
+*.o
+*.obj
+
+# Archivos temporales de Dev-C++
+*.layout
+*.depend
+*.bak
+
+# Archivos de respaldo
+*~
+*.tmp
+
+# Configuración de otros editores
+.vscode/
+.idea/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+desktop.ini
