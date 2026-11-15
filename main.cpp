@@ -7,6 +7,9 @@ Ana Paula Santillan Nuñez - 246102
 #include <iostream>
 #include <stdexcept>
 #include "Estado.h"
+#include "Visitados.h"
+#include "Cola.h"
+#include "Lista.h"
 
 using namespace std;
 
@@ -82,7 +85,7 @@ int main() {
     // ==========================================
     // PRUEBA 1: HUECO EN EL CENTRO
     // ==========================================
-
+/*
     cout << "==================================" << endl;
     cout << " PRUEBA 1: HUECO EN EL CENTRO" << endl;
     cout << "==================================" << endl;
@@ -180,7 +183,37 @@ int main() {
 
     // Verificar que el tablero original sigue intacto
     cout << "\nTablero original despues de generar hijos:" << endl;
-    esquina.imprimir();
+    esquina.imprimir();*/
+    
+    Visitados visitados;
+
+    Estado* e1 = new Estado("123456780");
+    Estado* e2 = new Estado("123456708");
+    Estado* e3 = new Estado("123450786");
+
+    // Insertar estados
+    visitados.insertar(e1);
+    visitados.insertar(e2);
+    visitados.insertar(e3);
+
+    cout << "Estados insertados: "
+         << visitados.size() << endl;
+
+    // Buscar un estado que existe
+    Estado buscar1("1234567X8");
+
+    // Buscar un estado que no existe
+    Estado buscar2("123456789");
+
+    cout << "Buscar estado existente: "
+         << visitados.contiene(buscar1) << endl;
+
+    cout << "Buscar estado inexistente: "
+         << visitados.contiene(buscar2) << endl;
+
+    delete e1;
+    delete e2;
+    delete e3;
 
     return 0;
 }
