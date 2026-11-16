@@ -13,7 +13,7 @@ Rompecabezas::Rompecabezas() {
 Rompecabezas::~Rompecabezas() {
   Node<Estado *> *aux = visitados.Front();
 
-  while (aux != NULL) {
+  while (aux != nullptr) {
     delete aux->getData();
     aux = aux->getNext();
   }
@@ -54,7 +54,7 @@ bool Rompecabezas::resolver(const char inicio[9], const char fin[9]) {
         continue;
       }
 
-      if (visitados.search(hijo) != NULL) {
+      if (visitados.search(hijo) != nullptr) {
         delete hijo;
         continue;
       }
