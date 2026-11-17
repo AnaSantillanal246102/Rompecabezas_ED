@@ -7,13 +7,34 @@ Ana Paula Santillan Nuñez - 246102
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <cctype>
 
 using namespace std;
+
+bool leerTablero(const string &mensaje, char tablero[9]);
 
 const char OBJETIVO[9] = {
     '1', '2', '3',
     '4', '5', '6',
     '7', '8', 'X'};
+
+void probarTablero(const char tablero[9], const char objetivo[9]) {
+  try {
+    Rompecabezas juego;
+    bool resuelto = juego.resolver(tablero, objetivo);  //entrada objetivo por teclado
+
+    if (resuelto) {
+      juego.mostrarSolucion();
+    } else {
+      cout << "Este tablero NO tiene solucion." << endl;
+    }
+
+    cout << "Estados expandidos: " << juego.getEstadosExpandidos() << endl;
+    cout << "Estados visitados:  " << juego.getEstadosVisitados() << endl;
+  } catch (const invalid_argument &error) {
+    cout << error.what() << endl;
+  }
+}
 
 void probarTablero(const char tablero[9]) {
   try {
@@ -52,6 +73,7 @@ int main() {
     cout << "\n===== ROMPECABEZAS DE 8 PIEZAS =====" << endl;
     cout << "1. Correr tableros de prueba" << endl;
     cout << "2. Escribir mi propio tablero" << endl;
+    cout << "3. Ingresar un objetivo contra el que comparar" << endl;
     cout << "0. Salir" << endl;
     cout << "Opcion: ";
 
@@ -76,9 +98,35 @@ int main() {
         }
         cout << endl;
         probarTablero(tablero);
-      }
-    } else if (opcion != 0) {
-      cout << "Opcion no valida." << endl;
-    }
+  		}
+	} else if (opcion == 3) {
+	    char inicial[9];
+	    char objetivo[9];
+	
+	    if (leerTablero("Tablero inicial (ej. 1234X6758): ", inicial) &&
+	        leerTablero("Tablero objetivo (ej. 87654321X): ", objetivo)) {
+	        cout << endl;
+	        probarTablero(inicial, objetivo);
+	    }
+	
+	} else if (opcion != 0) {
+	    cout << "Opcion no valida." << endl;
+	}
   } while (opcion != 0);
+}
+
+bool leerTablero(const string &mensaje, char tablero[9]){
+  string entrada;
+  cout << mensaje;
+  cin >> entrada;
+
+  if (entrada.length() != 9) {
+    cout << "Error: deben ser exactamente 9 caracteres." << endl;
+    return false;
+  }
+
+  for (int i = 0; i < 9; i++) {
+    tablero[i] = toupper(entrada[i]);
+  }
+  return true;
 }

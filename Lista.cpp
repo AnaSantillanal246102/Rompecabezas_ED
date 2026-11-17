@@ -3,7 +3,7 @@
 
 template <class T>
 TDA_Lista_Simple<T>::TDA_Lista_Simple() {
-  head = NULL;
+  head = nullptr;
   size = 0;
 }
 
@@ -11,7 +11,7 @@ template <class T>
 TDA_Lista_Simple<T>::~TDA_Lista_Simple() {
   Node<T> *aux = head;
 
-  while (aux != NULL) {
+  while (aux != nullptr) {
     Node<T> *sig = aux->getNext();
     delete aux;
     aux = sig;
@@ -31,14 +31,14 @@ template <class T>
 Node<T> *TDA_Lista_Simple<T>::search(T data) {
   Node<T> *index = head;
 
-  while (index != NULL) {
+  while (index != nullptr) {
     if (index->getData()->esIgual(*data)) {
       return index;
     }
     index = index->getNext();
   }
 
-  return NULL;
+  return nullptr;
 }
 
 template <class T>
